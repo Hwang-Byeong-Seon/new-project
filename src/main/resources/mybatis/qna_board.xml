@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="qna_board">
+
+ <!-- 최대 글번호 얻기 -->
+ <select id="numMax" resultType="Integer">
+   select max(q_num) from q_board
+ </select>
+ 
+ 
+ <!-- 답글 끼워넣기 위치 확보 -->
+ <update id="reStep" parameterType="qna77">
+  update q_board set q_re_step=q_re_step+1
+  where q_ref=#{q_ref} and q_re_step>#{q_re_step}
+ </update>
+ 
+ <!-- 글쓰기, 답글쓰기 -->
+ <insert id="insertDao" parameterType="qna77">
+  insert into q_board(q_writer,q_subject,q_pw,q_regdate,q_ref,q_re_step,q_re_level,q_content,q_ip,q_secret)
+  values(#{q_writer},#{q_subject},#{q_pw},NOW(),#{q_ref},#{q_re_step},#{q_re_level},#{q_content},#{q_ip},#{q_secret})
+ </insert>
+ 
+ <!-- 글 갯수 -->
+  <select id="countDao" resultType="int">
+    select count(*) from q_board
+  </select>
+  
+ <!-- 리스트 -->
+ <select id="listDao" parameterType="java.util.Map" resultType="qna77">
+   select * from q_board
+   order by q_ref desc, q_re_step asc
+   limit #{start},#{cnt}
+ </select>
+ 
+ <!-- 조회수 증가 -->
+ <update id="readcountDao" parameterType="Integer">
+   update q_board set q_readcount=q_readcount+1
+   where q_num=#{q_num}
+ </update>
+ 
+ <!-- 글내용 보기, 글 수정 폼 -->
+ <select id="getBoard" parameterType="Integer" resultType="qna77">
+   select * from q_board
+   where q_num=#{q_num}
+ </select>
+ 
+ <!-- DB글 수정 -->
+ <update id="updateDao" parameterType="qna77">
+ 	update q_board set q_writer=#{q_writer},q_subject=#{q_subject}, q_content=#{q_content}
+ 	where q_num=#{q_num} and q_pw=#{q_pw}
+
+ </update>
+ 
+ <!-- 글 삭제 -->
+ <delete id="deleteDao" parameterType="int">
+delete from q_board
+where q_num=#{q_num} 
+ </delete> 
+ 
+</mapper>

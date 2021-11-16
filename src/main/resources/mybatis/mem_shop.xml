@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mem_shop">
+
+<!-- id중복체크, 내정보 수정  -->
+<select id="member_select" parameterType="String" resultType="mem_shop">
+  select * from mem
+  where mem_id=#{mem_id}
+</select>
+
+<!-- 회원가입 -->
+<insert id="insertMember" parameterType="mem_shop">
+ insert into mem(mem_id,mem_pw ,mem_name ,mem_em ,mem_tel ,mem_zipcode ,mem_addr ,mem_addr2 ,regdate)
+ values(#{mem_id},#{mem_pw},#{mem_name},#{mem_em},#{mem_tel},#{mem_zipcode},#{mem_addr},#{mem_addr2},NOW())
+</insert>
+
+<!-- 로그인 , map사용-->
+<select id="loginMember" parameterType="map" resultType="mem_shop">
+  select * from mem
+  where mem_id=#{mem_id} and mem_pw=#{mem_pw}
+</select>
+
+<!-- DB 내정보수정  -->
+<update id="mem_update" parameterType="mem_shop">
+	update mem
+	set mem_pw=#{mem_pw},mem_name=#{mem_name}, mem_em=#{mem_em}
+	,mem_tel=#{mem_tel}, mem_zipcode=#{mem_zipcode}, mem_addr=#{mem_addr} ,mem_addr2=#{mem_addr2} 
+	where mem_id=#{mem_id}
+</update>
+
+<!-- 탈퇴 -->
+<delete id="member_delete" parameterType="String">
+	delete from mem
+	where mem_id=#{mem_id}
+</delete>
+
+</mapper>

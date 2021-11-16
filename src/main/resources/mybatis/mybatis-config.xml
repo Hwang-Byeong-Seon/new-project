@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!-- 별칭사용 -->
+	<typeAliases>
+		<typeAlias alias="board77" type="model.board.BoardDTO"/>
+		<typeAlias alias="mem_shop" type="model.board.MemDTO"/>
+		<typeAlias alias="faq77" type="model.board.FaqDTO"/>
+		<typeAlias alias="notice77" type="model.board.NoticeDTO"/>
+		<typeAlias alias="qna77" type="model.board.QnaDTO"/>
+	</typeAliases>
+
+
+	<mappers>
+	  <mapper resource="/mybatis/board.xml"/>
+	  <mapper resource="/mybatis/mem_shop.xml"/>
+	  <mapper resource="/mybatis/boardfaq.xml"/>
+	  <mapper resource="/mybatis/board_no.xml"/>
+	  <mapper resource="/mybatis/qna_board.xml"/>
+	</mappers>
+
+</configuration>

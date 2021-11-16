@@ -1,0 +1,69 @@
+create database shop;
+
+use shop;
+=======================
+board_sh 메인 게시판 DB
+=======================
+create table board_sh(
+num_sh int not null primary key auto_increment,
+writer_sh varchar(30) not null,
+subject_sh varchar(40) not null,
+pw_sh varchar(15) not null,
+regdate_sh datetime,
+readcount_sh int default 0,
+ref_sh int not null,
+re_step_sh int not null,
+re_level_sh int not null,
+content_sh text not null,
+ip_sh varchar(20) not null
+);
+===========================
+faq 게시판 DB
+===========================
+create table board_faq(
+num_faq int not null primary key auto_increment,
+writer_faq varchar(30) not null,
+subject_faq varchar(40) not null,
+pw_faq varchar(15) not null,
+regdate_faq datetime,
+readcount_faq int default 0,
+ref_faq int not null,
+re_step_faq int not null,
+re_level_faq int not null,
+content_faq text not null,
+ip_faq varchar(20) not null,
+fileName varchar(40),
+fileName2 varchar(40),
+fileName3 varchar(40)
+) DEFAULT CHARSET=utf8 ;
+==============================
+회원가입 DB
+==============================
+create table mem(
+mem_id varchar(30) not null primary key,
+mem_pw varchar(15) not null, 
+mem_name varchar(30) not null,
+mem_em varchar(30) not null,
+mem_tel varchar(14) not null,
+mem_zipcode varchar(10) not null,
+mem_addr varchar(50) not null,
+mem_addr2 varchar(30) not null,
+regdate date not null
+);
+==============================
+공지사항 DB
+==============================
+create table board_no(
+num_no int not null primary key auto_increment,
+writer_no varchar(30) not null,
+subject_no varchar(40) not null,
+regdate_no datetime,
+readcount_no int default 0,
+ref_no int not null,
+re_step_no int not null,
+re_level_no int not null,
+content_no text not null,
+fileName varchar(40),
+fileName2 varchar(40),
+fileName3 varchar(40)
+) DEFAULT CHARSET=utf8;

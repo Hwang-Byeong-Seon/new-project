@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board_faq">
+<!-- 최대 글번호 얻기 -->
+  <select id="numMax" resultType="Integer">
+    select max(num_faq) from board_faq
+  </select>
+  
+  <!-- 답글 끼워넣기 위치 확보 -->
+  <update id="reStep" parameterType="faq77">
+    update board_faq set re_step_faq=re_step_faq+1
+    where ref_faq=#{ref_faq} and re_step_faq>#{re_step_faq}
+  </update>
+  
+  <!-- 글쓰기, 답글쓰기 -->
+  <insert id="insertDao" parameterType="faq77">
+    insert into board_faq(writer_faq,subject_faq,pw_faq,regdate_faq,ref_faq,re_step_faq,re_level_faq,content_faq,ip_faq,fileName,fileName2,fileName3)
+    values(#{writer_faq},#{subject_faq},#{pw_faq},NOW(),#{ref_faq},#{re_step_faq},#{re_level_faq},#{content_faq},#{ip_faq},#{fileName},#{fileName2},#{fileName3})
+  </insert>
+
+<!-- 글 개수 -->
+  <select id="countDao" resultType="int">
+    select count(*) from board_faq
+  </select>
+  
+  <!-- 리스트 limit는 어디부터 어디까지임 -->
+  <select id="listDao" parameterType="java.util.Map" resultType="faq77">
+    select * from board_faq
+    order by ref_faq desc, re_step_faq asc
+    limit #{start},#{cnt}
+  </select>
+  
+  <!-- 조회수 증가 -->
+  <update id="readcountDao" parameterType="int">
+    update board_faq set readcount_faq=readcount_faq+1
+    where num_faq=#{num_faq}
+  </update>
+  
+  <!-- 글내용 보기, 글 수정 폼 -->
+  <select id="getBoard" parameterType="int" resultType="faq77">
+    select * from board_faq
+    where num_faq=#{num_faq}
+  </select>
+  
+  <!-- DB글 수정 -->
+  <update id="updateDao" parameterType="faq77">
+    update board_faq set writer_faq=#{writer_faq},subject_faq=#{subject_faq},content_faq=#{content_faq}
+    where num_faq=#{num_faq} and pw_faq=#{pw_faq}
+  </update>
+  
+  <!-- 글삭제 -->
+  <delete id="deleteDao" parameterType="int">
+    delete from board_faq
+    where num_faq=#{num_faq}
+  </delete>
+  
+</mapper>

@@ -1,0 +1,14 @@
+create table q_board(
+q_num int(4) not null auto_increment primary key,
+q_writer varchar(30) not null,
+q_subject varchar(40) not null,
+q_pw varchar(20) not null,
+q_regdate date,
+q_readcount int default 0,
+q_ref int(10),
+q_re_step int(10),
+q_re_level int(10),
+q_content text not null,
+q_ip varchar(30),
+q_secret boolean default 0
+);
